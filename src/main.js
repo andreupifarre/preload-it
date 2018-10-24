@@ -8,7 +8,7 @@ export default function Preload() {
 		loaded: false,
 		onprogress: () => {},
 		oncomplete: () => {},
-		preload: function(list) {
+		fetch: function(list) {
 			this.loaded = list.length;
 			for (var item of list) {
 				this.status.push({url: item});
