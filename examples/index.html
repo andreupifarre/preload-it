@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Omi in One Minute</title>
+</head>
+
+<body>
+  <script src="../dist/preload.umd.js"></script>
+  <script>
+    //console.log(new Preload(['http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'], () => {}));
+    const preload = Preload();
+    preload.preload(
+      [
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        //'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+        'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?cs=srgb&dl=beach-exotic-holiday-248797.jpg&fm=jpg'
+      ], items => {
+        console.log(items);
+      }
+    ).onprogress = event => {
+      console.log(event.progress + '%');
+    }
+    
+    //var preload = new Preload();
+    
+    // preload.go(
+    //   ['http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'], 
+    //   function() {
+    //     alert(11);
+    //   }
+    // );
+  </script>
+</body>
+
+</html>
