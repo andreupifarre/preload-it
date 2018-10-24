@@ -13,15 +13,19 @@ const preload = Preload();
 preload.fetch([
     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?cs=srgb&dl=beach-exotic-holiday-248797.jpg&fm=jpg'
+    'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg'
 ])
 
-preload.onomplete = items => {
+preload.oncomplete = items => {
   console.log(items);
 }
 
 preload.onprogress = event => {
   console.log(event.progress + '%');
+}
+
+preload.onfetched = item => {
+  console.log(item);
 }
 ```
 

@@ -4,6 +4,7 @@ import getItemByUrl from './getItemByUrl.js';
 
 export default function Preload() {
 	return {
+		progressRate: 0,
 		status: [],
 		loaded: false,
 		onprogress: () => {},
@@ -13,12 +14,11 @@ export default function Preload() {
 			this.loaded = list.length;
 			for (var item of list) {
 				this.status.push({url: item});
-				this.preloadOne(item, () => {
+				this.preloadOne(item, item => {
+					this.onfetched(item)
 					this.loaded--;
 					if (this.loaded==0) {
 						this.oncomplete(this.status)
-					} else {
-						this.onfetched(this.status[this.loaded])
 					}
 				});
 			}
