@@ -1,13 +1,21 @@
-# rollup-starter-lib
+# preload
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/rollup/rollup-starter-lib.svg)](https://greenkeeper.io/)
 
-This repo contains a bare-bones example of how to create a library using Rollup, including importing a module from `node_modules` and converting it from CommonJS.
-
-We're creating a library called `how-long-till-lunch`, which usefully tells us how long we have to wait until lunch, using the [ms](https://github.com/zeit/ms) package:
+Preload is a 1.1kb JavaScript library for preloading assets on the browser. Preload provides the ability to load assets of different
+file types, composite progress events.
 
 ```js
-console.log('it will be lunchtime in ' + howLongTillLunch());
+const preload = Preload();
+preload.preload([
+    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    //'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+    'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?cs=srgb&dl=beach-exotic-holiday-248797.jpg&fm=jpg'
+], items => {
+    console.log(items);
+}).onprogress = event => {
+  console.log(event.progress + '%');
+}
 ```
 
 ## Getting started
