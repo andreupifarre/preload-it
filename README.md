@@ -11,12 +11,12 @@ file types, composite progress events.
 const preload = Preload();
 
 preload.preload([
-	'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-	'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg'
+  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+  'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg'
 ], items => {
-	console.log(items);
+  console.log(items);
 }).onprogress = event => {
-	console.log(event.progress + '%');
+  console.log(event.progress + '%');
 }
 ```
 
