@@ -7,14 +7,16 @@ export default function Preload() {
 		status: [],
 		loaded: false,
 		onprogress: () => {},
-		preload: function(list, done) {
+		oncomplete: () => {},
+		preload: function(list) {
 			this.loaded = list.length;
 			for (var item of list) {
 				this.status.push({url: item});
 				this.preloadOne(item, () => {
 					this.loaded--;
 					if (this.loaded==0) {
-						done(this.status);
+						//done(this.status);
+						this.oncomplete(this.status)
 					}
 				});
 			}
