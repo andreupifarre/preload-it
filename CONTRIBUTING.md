@@ -4,7 +4,7 @@ Any form of contribution is welcomed.
 
 ## Acknowledgements
 
-- Andreu Pifarre
+- <It could be you!>
 
 ## Open source contributor incentives
 
