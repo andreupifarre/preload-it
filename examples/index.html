@@ -24,6 +24,10 @@
     preload.onprogress = event => {
       console.log(event.progress + '%');
     }
+
+    preload.onfetched = event => {
+      console.log(event);
+    }
   </script>
 </body>
 

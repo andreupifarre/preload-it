@@ -16,7 +16,7 @@ preload.fetch([
     'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?cs=srgb&dl=beach-exotic-holiday-248797.jpg&fm=jpg'
 ])
 
-preload.oncomplete = items => {
+preload.onomplete = items => {
   console.log(items);
 }
 

@@ -8,6 +8,7 @@ export default function Preload() {
 		loaded: false,
 		onprogress: () => {},
 		oncomplete: () => {},
+		onfetched: () => {},
 		fetch: function(list) {
 			this.loaded = list.length;
 			for (var item of list) {
@@ -15,8 +16,9 @@ export default function Preload() {
 				this.preloadOne(item, () => {
 					this.loaded--;
 					if (this.loaded==0) {
-						//done(this.status);
 						this.oncomplete(this.status)
+					} else {
+						this.onfetched(this.status[this.loaded])
 					}
 				});
 			}
