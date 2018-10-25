@@ -1,8 +1,11 @@
 export default function updateProgressBar(item) {
 	var sumCompletion = 0
 	var maxCompletion = this.status.length * 100
+
 	for (var itemStatus of this.status) {
-		sumCompletion += itemStatus.completion 
+		if (itemStatus.completion) {
+			sumCompletion += itemStatus.completion;
+		}
 	}
 	var totalCompletion = parseInt((sumCompletion / maxCompletion) * 100)
 
