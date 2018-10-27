@@ -1,6 +1,6 @@
 {
   "name": "preload-it",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A tiny 1kb JavaScript library for preloading assets on the browser via XHR2. It provides the ability to load assets of different file types and composite progress events.",
   "author": "Andreu Pifarre",
   "license": "MIT",
