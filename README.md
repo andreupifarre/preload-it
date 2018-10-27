@@ -1,7 +1,5 @@
 # preload
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/rollup/rollup-starter-lib.svg)](https://greenkeeper.io/)
-
 Preload is a 1.1kb JavaScript library for preloading assets on the browser. Preload provides the ability to load assets of different
 file types, composite progress events.
 
