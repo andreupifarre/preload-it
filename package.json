@@ -1,12 +1,19 @@
 {
-  "name": "rollup-starter-lib",
+  "name": "preload.js",
   "version": "1.0.0",
-  "main": "dist/preload.cjs.js",
+  "description": "Preload is a 1kb JavaScript library for preloading assets on the browser. Preload provides the ability to load assets of different file types and composite progress events.",
+  "author": "Andreu Pifarre",
+  "license": "MIT",
+  "repository": "https://github.com/andreupifarre/preload.js",
+  "bugs": "https://github.com/andreupifarre/preload.js/issues",
+  "keywords": "preload",
+  "unpkg": "dist/preload.min.js",
+  "main": "dist/preload.js",
   "module": "dist/preload.esm.js",
-  "browser": "dist/preload.umd.js",
-  "dependencies": {
-    "eventemitter3": "^3.1.0"
-  },
+  "module_minified": "dist/preload.esm.min.js",
+  "browser": "dist/preload.js",
+  "minified": "dist/preload.min.js",
+  "dependencies": {},
   "devDependencies": {
     "rollup": "^0.66.6",
     "rollup-plugin-commonjs": "^9.2.0",
