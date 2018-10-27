@@ -24,7 +24,7 @@ export default function preloadOne(url, done) {
 			item.downloaded = event.loaded;
 			item.total = event.total;
 			self.updateProgressBar(item);
-			startTime();
+			//startTime();
 		}
 		
 	};
@@ -34,8 +34,10 @@ export default function preloadOne(url, done) {
 			//type: type
 		});
 		var url = URL.createObjectURL(blob);
-		var item = self.getItemByUrl(event.target.responseURL);
+		var responseURL = event.target.responseURL;
+		var item = self.getItemByUrl(responseURL);
 		item.blobUrl = url;
+		item.fileName = responseURL.substring(responseURL.lastIndexOf('/')+1);
 		//item.type = type;
 		item.size = blob.size;
 
