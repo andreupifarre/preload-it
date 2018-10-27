@@ -29,16 +29,16 @@ export default function preloadOne(url, done) {
 		
 	};
 	xhr.onload = function(event) {
-		//var type = 'video/mp4';
+		var type = event.target.response.type;
 		var blob = new Blob([event.target.response], {
-			//type: type
+			type: type
 		});
 		var url = URL.createObjectURL(blob);
 		var responseURL = event.target.responseURL;
 		var item = self.getItemByUrl(responseURL);
 		item.blobUrl = url;
 		item.fileName = responseURL.substring(responseURL.lastIndexOf('/')+1);
-		//item.type = type;
+		item.type = type;
 		item.size = blob.size;
 
 		done(item);
