@@ -27,7 +27,7 @@ preload.onfetched = item => {
 }
 ```
 
-<a href="https://andreupifarre.github.io/preload.js/docs/index.html">See an eample here</a>
+<a href="https://andreupifarre.github.io/preload.js/docs/index.html">See a live example</a>
 
 ## License
 
