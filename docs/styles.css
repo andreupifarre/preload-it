@@ -1,0 +1,44 @@
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+#progress {
+  font-size: 40px;
+}
+#progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: red;
+  display: block;
+}
+#loaded-items {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f3f3f3;
+}
+#loaded-items span {
+  display: block;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xml:space='preserve' width='43.3492mm' height='43.3492mm' version='1.1' viewBox='0 0 4335 4335' shape-rendering='geometricPrecision' text-rendering='geometricPrecision' image-rendering='optimizeQuality' fill-rule='evenodd' clip-rule='evenodd'><defs><style type='text/css'><![CDATA[.fil0 {fill:#47AD4C}]]></style></defs><path class='fil0' fill='#47AD4C' d='M174 2688l355-355 1073 1073 581-580-6-6 1659-1658 355 355-926 926 6 6-1659 1658-8-9-10 10z'/></svg>");
+  background-position: left 1px;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  padding-left: 25px;
+}
+#loaded-items:before {
+  content: 'Loaded assets:';
+  font-size: 16px;
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+#player {
+  width: 100%;
+  margin-bottom: 15px;
+}

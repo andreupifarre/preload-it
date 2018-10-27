@@ -4,32 +4,56 @@
 <head>
   <meta charset="UTF-8" />
   <title>preload-it</title>
+  <link type="text/css" href="styles.css" rel="stylesheet">
 </head>
 
 <body>
+  <div class="container">
+    <h1>preload-it</h1>
+    <div id="progress"></div>
+    <div id="progress-bar"></div>
+    <div id="loaded-items"></div>
+    <video id="player" controls crossorigin playsinline muted></video>
+    <script src="https://gist.github.com/andreupifarre/1d75f9f5b5edeb8e36c995339b4f2854.js"></script>
+  </div>
+
   <script src="https://unpkg.com/preload-it@latest/dist/preload-it.js"></script>
   <script>
+
+    // Video events
+    const player = document.getElementById('player');
+
+    player.addEventListener('emptied', e => player.play());
+    
+    player.addEventListener('timeupdate', () => {
+      if (player.currentTime >= player.duration) {
+        const randomItem = preload.status[preload.status.length * Math.random() | 0];
+        player.src = randomItem.blobUrl; 
+      }
+    });
+
+
+    // preload-it events
     const preload = Preload();
 
     preload.fetch([
-        'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg'
+      'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+      'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+      'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
     ])
 
-    preload.oncomplete = items => {
-      console.log(items);
+    preload.onprogress = event => {
+      document.getElementById('progress').textContent = document.getElementById('progress-bar').style.width = event.progress + '%';
     }
 
-    preload.onprogress = event => {
-      console.log(event.progress + '%');
+    preload.oncomplete = items => {
+      player.src = preload.getItemByUrl('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4').blobUrl;
+      player.play();
     }
 
     preload.onfetched = item => {
-      console.log(item);
+      document.getElementById('loaded-items').innerHTML += '<span>' + item.fileName + ' <strong>[' + item.size + ']</strong></span>';
     }
   </script>
-  Check your browser console!
 </body>
-
 </html>
