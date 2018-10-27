@@ -3,17 +3,17 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Preload</title>
+  <title>preload-it</title>
 </head>
 
 <body>
-  <script src="../dist/preload.umd.js"></script>
+  <script src="../dist/preload-it.js"></script>
   <script>
     const preload = Preload();
 
     preload.fetch([
         'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        //'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg'
     ])
 
@@ -23,7 +23,6 @@
 
     preload.onprogress = event => {
       console.log(event.progress + '%');
-      //console.log(event);
     }
 
     preload.onfetched = item => {
