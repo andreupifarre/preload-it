@@ -1,6 +1,7 @@
 import preloadOne from './preloadOne.js';
 import updateProgressBar from './updateProgressBar.js';
 import getItemByUrl from './getItemByUrl.js';
+import fetch from './fetch.js';
 
 export default function Preload() {
 	return {
@@ -10,21 +11,7 @@ export default function Preload() {
 		onprogress: () => {},
 		oncomplete: () => {},
 		onfetched: () => {},
-		fetch: function(list) {
-			this.loaded = list.length;
-			for (var item of list) {
-				this.status.push({url: item});
-				this.preloadOne(item, item => {
-					this.onfetched(item)
-					this.loaded--;
-					if (this.loaded==0) {
-						this.oncomplete(this.status)
-					}
-				});
-			}
-			
-			return this;
-		},
+		fetch,
 		updateProgressBar,
 		preloadOne,
 		getItemByUrl

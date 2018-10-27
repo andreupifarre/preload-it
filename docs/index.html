@@ -17,7 +17,8 @@
     <script src="https://gist.github.com/andreupifarre/1d75f9f5b5edeb8e36c995339b4f2854.js"></script>
   </div>
 
-  <script src="https://unpkg.com/preload-it@latest/dist/preload-it.js"></script>
+  <!-- <script src="https://unpkg.com/preload-it@latest/dist/preload-it.js"></script> -->
+  <script src="../dist/preload-it.js"></script>
   <script>
 
     // Video events
@@ -40,15 +41,17 @@
       'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
       'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
       'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
-    ])
-
-    preload.onprogress = event => {
-      document.getElementById('progress').textContent = document.getElementById('progress-bar').style.width = event.progress + '%';
-    }
+    ]).then(result => {
+      // use a promise or 'oncomplete'
+    });
 
     preload.oncomplete = items => {
       player.src = preload.getItemByUrl('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4').blobUrl;
       player.play();
+    }
+
+    preload.onprogress = event => {
+      document.getElementById('progress').textContent = document.getElementById('progress-bar').style.width = event.progress + '%';
     }
 
     preload.onfetched = item => {
