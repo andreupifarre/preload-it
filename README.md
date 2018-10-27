@@ -1,13 +1,14 @@
-# preload.js
+# preload-it
 
-Preload is a 1kb JavaScript library for preloading assets on the browser. Preload provides the ability to load assets of different file types and composite progress events.
+A tiny 1kb JavaScript library for preloading assets on the browser via XHR2. 
+It provides the ability to load assets of different file types and composite progress events.
 
 ## Installing
 
-If you use npm, `npm install preload.js`. Otherwise, download the [latest release](https://github.com/andreupifarre/preload.js/releases/latest). The released bundle supports anonymous AMD, CommonJS, and vanilla environments. You can load directly from [unpkg](https://unpkg.com/preload.js/). For example:
+If you use npm, `npm install preload-it`. Otherwise, download the [latest release](https://github.com/andreupifarre/preload-it/releases/latest). The released bundle supports anonymous AMD, CommonJS, and vanilla environments. You can load directly from [unpkg](https://unpkg.com/preload-it/). For example:
 
 ```html
-<script src="https://preload.js"></script>
+<script src="https://preload-it"></script>
 ```
 
 For the minified version:
@@ -16,7 +17,7 @@ For the minified version:
 <script src="https://preload.min.js"></script>
 ```
 
-preload.js is written using [ES2015 modules](http://www.2ality.com/2014/09/es6-modules-final.html). Create a [custom bundle using Rollup](https://bl.ocks.org/mbostock/bb09af4c39c79cffcde4), Webpack, or your preferred bundler. To import preload.js into an ES2015 application, import into a namespace:
+preload-it is written using [ES2015 modules](http://www.2ality.com/2014/09/es6-modules-final.html). Create a [custom bundle using Rollup](https://bl.ocks.org/mbostock/bb09af4c39c79cffcde4), Webpack, or your preferred bundler. To import preload-it into an ES2015 application, import into a namespace:
 
 ```js
 import * as preload from "preload";
@@ -46,7 +47,7 @@ preload.onfetched = item => {
 }
 ```
 
-[See a live example](https://andreupifarre.github.io/preload.js/docs/index.html)
+[See a live example](https://andreupifarre.github.io/preload-it/docs/index.html)
 
 ## License
 
