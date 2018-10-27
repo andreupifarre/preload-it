@@ -27,6 +27,8 @@ preload.onfetched = item => {
 }
 ```
 
+<a href="https://andreupifarre.github.io/preload.js/docs/index.html">See an eample here</a>
+
 ## License
 
 Released for free under the MIT license, which means you can use it for almost any purpose (including commercial projects). We appreciate credit where possible, but it is not a requirement.
