@@ -1,4 +1,4 @@
-# preload
+# preload.js
 
 Preload is a 1.1kb JavaScript library for preloading assets on the browser. Preload provides the ability to load assets of different
 file types, composite progress events.
