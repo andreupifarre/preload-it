@@ -17,7 +17,7 @@ For the minified version:
 <script src="https://unpkg.com/preload-it"></script>
 ```
 
-preload-it is written using [ES2015 modules](http://www.2ality.com/2014/09/es6-modules-final.html). Create a [custom bundle using Rollup](https://bl.ocks.org/mbostock/bb09af4c39c79cffcde4), Webpack, or your preferred bundler. To import preload-it into an ES2015 application, import into a namespace:
+preload-it is written using [ES2015 modules](http://www.2ality.com/2014/09/es6-modules-final.html). To import preload-it into an ES2015 application, import into a namespace:
 
 ```js
 import * as preload from "preload";
