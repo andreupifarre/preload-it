@@ -14,7 +14,7 @@ export default function preloadOne(url, done) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url, true);
 	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-	xhr.responseType = 'arraybuffer';
+	xhr.responseType = 'blob';
 	xhr.onprogress = function(event) {
 		//if (event.lengthComputable && endTime() > 500) {
 		if (event.lengthComputable) {
