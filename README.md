@@ -51,6 +51,9 @@ preload.onfetched = item => {
 
 [See a live example](https://andreupifarre.github.io/preload-it/docs/index.html)
 
+<p data-height="265" data-theme-id="0" data-slug-hash="RedPEQ" data-default-tab="js,result" data-user="andreupifarre" data-pen-title="Preload-it example" class="codepen">See the Pen <a href="https://codepen.io/andreupifarre/pen/RedPEQ/">Preload-it example</a> by Andreu (<a href="https://codepen.io/andreupifarre">@andreupifarre</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
 ## License
 
 Released for free under the MIT license, which means you can use it for almost any purpose (including commercial projects). We appreciate credit where possible, but it is not a requirement.
