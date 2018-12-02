@@ -26,7 +26,7 @@ preload-it is written using [ES2015 modules](http://www.2ality.com/2014/09/es6-m
 ```
 or
 
-```html
+```js
 import Preload from 'preload-it'
 const preload = Preload()
 ```
