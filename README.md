@@ -19,10 +19,16 @@ For the minified version:
 
 preload-it is written using [ES2015 modules](http://www.2ality.com/2014/09/es6-modules-final.html). To import preload-it into an ES2015 application, import into a namespace:
 
-```hmtl
+```html
 <script type="module">
 	import preload from 'https://unpkg.com/preload-it@latest/dist/preload-it.esm.min.js';
 </script>
+```
+or
+
+```html
+import Preload from 'preload-it'
+const preload = Preload()
 ```
 
 ## Getting started
