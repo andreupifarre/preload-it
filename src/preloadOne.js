@@ -4,7 +4,7 @@ export default function preloadOne(url, done) {
 	xhr.responseType = 'blob'
 	xhr.onprogress = event => {
 		if (!event.lengthComputable) return false
-		let item = this.getItemByUrl(event.target.url)
+		let item = this.getItemByUrl(url)
 		item.completion = parseInt((event.loaded / event.total) * 100)
 		item.downloaded = event.loaded
 		item.total = event.total
