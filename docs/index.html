@@ -28,7 +28,7 @@
       
       player.addEventListener('timeupdate', () => {
         if (player.currentTime >= player.duration) {
-          const randomItem = preload.status[preload.status.length * Math.random() | 0];
+          const randomItem = preload.state[preload.state.length * Math.random() | 0];
           player.src = randomItem.blobUrl; 
         }
       });
@@ -38,6 +38,8 @@
       const preload = Preload();
 
       preload.fetch([
+        'ForBiggerJoyrides.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4',
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
@@ -56,6 +58,10 @@
 
       preload.onfetched = item => {
         document.getElementById('loaded-items').innerHTML += '<span>' + item.fileName + ' <strong>[' + item.size + ']</strong></span>';
+      }
+
+      preload.onerror = item => {
+        console.log(item)
       }
     </script>
   </body>

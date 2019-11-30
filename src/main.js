@@ -5,11 +5,12 @@ import fetch from './fetch.js'
 
 export default function Preload() {
 	return {
-		status: [],
+		state: [],
 		loaded: false,
 		onprogress: () => {},
 		oncomplete: () => {},
 		onfetched: () => {},
+		onerror: () => {},
 		fetch,
 		updateProgressBar,
 		preloadOne,

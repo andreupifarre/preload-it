@@ -1,7 +1,7 @@
 # preload-it
 
 A tiny 1kb JavaScript library for preloading assets on the browser via XHR2. 
-It provides the ability to load assets of different file types and composite progress events.
+It provides the ability to preload assets of different file types and composite progress events.
 
 ## Installing
 
@@ -56,6 +56,11 @@ preload.onprogress = event => {
 preload.onfetched = item => {
   console.log(item);
 }
+
+preload.onerror = item => {
+  console.log(item);
+}
+
 ```
 
 [See a live example](https://andreupifarre.github.io/preload-it/docs/index.html)
