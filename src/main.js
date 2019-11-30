@@ -3,10 +3,11 @@ import updateProgressBar from './updateProgressBar.js'
 import getItemByUrl from './getItemByUrl.js'
 import fetch from './fetch.js'
 
-export default function Preload() {
+export default function Preload(options) {
 	return {
 		state: [],
 		loaded: false,
+		stepped: (options && options.stepped) || true,
 		onprogress: () => {},
 		oncomplete: () => {},
 		onfetched: () => {},

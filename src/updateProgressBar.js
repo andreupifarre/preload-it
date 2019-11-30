@@ -1,13 +1,27 @@
 export default function updateProgressBar(item) {
-	var sumCompletion = 0
-	var maxCompletion = this.state.length * 100
-
-	for (var itemState of this.state) {
-		if (itemState.completion) {
-			sumCompletion += itemState.completion;
+	let sumCompletion = 0
+	let maxCompletion = this.stepped ? (this.state.length * 100) : 0
+	let initialisedCount = 0
+	
+	for (const itemState of this.state) {
+		if (itemState.completion) initialisedCount++
+		if (this.stepped) {
+			if (itemState.completion) {
+				sumCompletion += itemState.completion;
+			}
+		} else {
+			if (this._readyForComputation) {
+				sumCompletion += itemState.downloaded
+				maxCompletion += itemState.total
+			} else {
+				sumCompletion = maxCompletion = 0
+			}
 		}
 	}
-	var totalCompletion = parseInt((sumCompletion / maxCompletion) * 100)
+
+	this._readyForComputation = (initialisedCount == this.state.length)
+
+	const totalCompletion = parseInt((sumCompletion / maxCompletion) * 100)
 
 	if (!isNaN(totalCompletion)) {
 		this.onprogress({
