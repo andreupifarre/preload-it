@@ -1,10 +1,65 @@
-const assert = require('assert');
-const Preload = require('..');
+describe('fetch', function () {
+	const media = [
+        'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+		'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+		'ForBiggerJoyrides.mp4'
+	]
 
-function test(list, expected) {
-	console.log(new Preload(list, () => {}))
-	//assert.equal(new Preload(list, () => {}), expected)
-	console.log(`\u001B[32m✓\u001B[39m ${expected}`)
-}
+	it('should track downloading progress', function (done) {
+		const preload = Preload()
+		preload.fetch(media)
 
-test(['http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'], '1 hour')
+		let progress = 0
+
+		preload.onprogress = event => {
+			const item = event.item
+			chai.expect(parseInt((item.downloaded / item.total) * 100)).to.equal(item.completion)
+			if (item.completion == 100) {
+				chai.expect(item.url).to.equal(preload.getItemByUrl(item.url).url)
+				chai.expect(item.total).to.equal(item.downloaded)
+			}
+			progress = event.progress
+		}
+
+		preload.oncomplete = items => {
+			chai.expect(progress).to.equal(100)
+			done()
+		}
+	})
+	
+	it('should complete the download of all files', function (done) {
+		const preload = Preload()
+		preload.fetch(media)
+
+		preload.oncomplete = items => {
+			for (const item of items) {
+				chai.expect(item.url).to.equal(preload.getItemByUrl(item.url).url)
+				chai.expect(item.total).to.equal(item.downloaded)
+				chai.expect(item.size).to.equal(item.total)
+				chai.expect(item.completion).to.equal(100)
+			}
+			done()
+		}
+	})
+
+	it('should fetch individual files', function (done) {
+		const preload = Preload()
+		preload.fetch(media)
+		
+		let files = 1
+		preload.onfetched = item => {
+			if (item.completion == 100) {
+				chai.expect(item.url).to.equal(preload.getItemByUrl(item.url).url)
+				chai.expect(item.total).to.equal(item.downloaded)
+				chai.expect(item.size).to.equal(item.total)
+			}
+
+			if (files == media.length) {
+				chai.expect(media.length).to.equal(files)
+				done()
+			}
+			files++
+		}
+	})
+})

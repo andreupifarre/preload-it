@@ -7,15 +7,15 @@
   "repository": "https://github.com/andreupifarre/preload-it",
   "bugs": "https://github.com/andreupifarre/preload-it/issues",
   "keywords": [
-    "preload", 
-    "preloading", 
-    "xhr", 
+    "preload",
+    "preloading",
+    "xhr",
     "assets",
-    "library", 
-    "es6", 
+    "library",
+    "es6",
     "videos",
-    "images", 
-    "assets", 
+    "images",
+    "assets",
     "load"
   ],
   "unpkg": "dist/preload-it.min.js",
@@ -26,6 +26,7 @@
   "minified": "dist/preload-it.min.js",
   "dependencies": {},
   "devDependencies": {
+    "express": "^4.17.1",
     "rollup": "^0.66.6",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^3.4.0",
@@ -34,7 +35,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "node test/test.js",
+    "test": "node test/server.js",
     "pretest": "npm run build"
   },
   "files": [
