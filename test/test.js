@@ -1,7 +1,7 @@
 describe('fetch', function () {
 	const media = [
 		'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-		'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp43',
+		// 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp43',
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
 		'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
 		'ForBiggerJoyrides.mp4'
@@ -29,7 +29,7 @@ describe('fetch', function () {
 		}
 	})
 	
-	it('should complete the download of all files', function (done) {
+	it('should complete the download of all requests', function (done) {
 		const preload = Preload()
 		preload.fetch(media)
 
@@ -44,7 +44,7 @@ describe('fetch', function () {
 		}
 	})
 
-	it('should fetch individual files', function (done) {
+	it('should fetch individual requests', function (done) {
 		const preload = Preload()
 		preload.fetch(media)
 		
@@ -61,6 +61,18 @@ describe('fetch', function () {
 				done()
 			}
 			files++
+		}
+	})
+
+	it('should trigger an error if an asset returns 404', function (done) {
+		const media404 = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp43'
+
+		const preload = Preload()
+		preload.fetch([media404])
+		
+		preload.onerror = item => {
+			chai.expect(item.url).to.equal(media404)
+			done()
 		}
 	})
 })
