@@ -63,6 +63,10 @@ preload.onerror = item => {
 
 ```
 
+[See a live example](https://andreupifarre.github.io/preload-it/docs/index.html)
+
+[Codepen Preload-it example](https://codepen.io/andreupifarre/pen/RedPEQ/)
+
 ## Canceling preload of assets
 
 Preloading of assets can be canceled at any time during fetching, when calling `preload.cancel()` all assets already preloaded will be available to use, however the download of pending assets will be abandoned, and `status` will be set to `0` for those remaining items.
@@ -74,11 +78,6 @@ preload.oncancel = items => {
   console.log(items);
 }
 ```
-
-
-[See a live example](https://andreupifarre.github.io/preload-it/docs/index.html)
-
-[Codepen Preload-it example](https://codepen.io/andreupifarre/pen/RedPEQ/)
 
 ## License
 
