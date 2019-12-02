@@ -7,6 +7,8 @@ describe('fetch', function () {
 		'ForBiggerJoyrides.mp4'
 	]
 
+	this.timeout(5000)
+
 	it('should track downloading progress', function (done) {
 		const preload = Preload()
 		preload.fetch(media)
@@ -73,6 +75,23 @@ describe('fetch', function () {
 		preload.onerror = item => {
 			chai.expect(item.url).to.equal(media404)
 			done()
+		}
+	})
+
+	it('should cancel the downloading of all pending requests', function (done) {
+		const preload = Preload()
+		preload.fetch(media)
+
+		preload.oncancel = items => {
+			let canceled = items.filter(item => item.status == 0)
+			chai.expect(canceled.length).to.be.above(0)
+			done()
+		}
+
+		preload.onprogress = event => {
+			if (event.progress > 50) {
+				preload.cancel()
+			}
 		}
 	})
 })
