@@ -1,7 +1,18 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import uglify from 'rollup-plugin-uglify-es';
+import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
+
+const getBabelPlugin = () => {
+  return babel({
+    presets: [
+      ['@babel/preset-env', {
+        modules: false
+      }]
+    ]
+  });
+};
 
 export default [
 	// browser-friendly UMD build
@@ -11,7 +22,10 @@ export default [
 			name: 'Preload',
 			file: pkg.browser,
 			format: 'umd'
-		}
+		},
+		plugins: [
+			getBabelPlugin()
+		]
 	},
 	{
 		input: 'src/main.js',
@@ -21,7 +35,8 @@ export default [
 			format: 'umd'
 		},
 		plugins: [
-			uglify()
+			uglify(),
+			getBabelPlugin()
 		]
 	},
 	// CommonJS (for Node) and ES module (for bundlers) build.
@@ -35,6 +50,9 @@ export default [
 		output: [
 			// { file: pkg.main, format: 'cjs' },
 			{ file: pkg.module, format: 'es' }
+		],
+		plugins: [
+			getBabelPlugin()
 		]
 	},
 	{
@@ -44,7 +62,8 @@ export default [
 			{ file: pkg.module_minified, format: 'es' }
 		],
 		plugins: [
-			uglify()
+			uglify(),
+			getBabelPlugin()
 		]
 	}
 ];
