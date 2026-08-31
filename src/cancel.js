@@ -1,12 +1,11 @@
 export default function cancel() {
-    for (var item of this.state) {
-        if (item.completion < 100) {
-            item.xhr.abort()
-            item.status = 0
-        }
-    }
+	const batch = this._activeBatch
+	if (!batch || batch.cancelled) return this.state
 
-    this.oncancel(this.state)
+	batch.cancelled = true
+	for (const item of batch.items) {
+		if (!this._settledItems.has(item) && item.xhr) item.xhr.abort()
+	}
 
-    return this.state
+	return this.state
 }

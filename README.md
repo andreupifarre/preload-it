@@ -1,86 +1,83 @@
 # preload-it
 
-A tiny 1kb JavaScript library for preloading assets on the browser via XHR2. 
-It provides the ability to preload assets of different file types and composite progress events.
+A small browser library for preloading assets with composite progress events.
 
-## Installing
+## Installation
 
-If you use npm, `npm i preload-it`. Otherwise, download the [latest release](https://github.com/andreupifarre/preload-it/releases/latest). The released bundle supports anonymous AMD, CommonJS, and vanilla environments. You can load directly from [unpkg](https://unpkg.com/preload-it/). For example:
-
-```html
-<script src="https://unpkg.com/preload-it@latest/dist/preload-it.js"></script>
+```sh
+npm install preload-it
 ```
-
-For the minified version:
-
-```html
-<script src="https://unpkg.com/preload-it"></script>
-```
-
-preload-it is written using [ES2015 modules](http://www.2ality.com/2014/09/es6-modules-final.html). To import preload-it into an ES2015 application, import into a namespace:
-
-```html
-<script type="module">
-	import preload from 'https://unpkg.com/preload-it@latest/dist/preload-it.esm.min.js';
-</script>
-```
-or
 
 ```js
-import Preload from 'preload-it';
-const preload = Preload();
-```
+import Preload from 'preload-it'
 
-## Getting started
+const preload = Preload({
+  stepped: true,
+  timeout: 30_000
+})
 
-```js
-const preload = Preload();
-
-preload.fetch([
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg'
-]).then(items => {
-  // use either a promise or 'oncomplete'
-  console.log(items);
-});
-
-preload.oncomplete = items => {
-  console.log(items);
-}
-
-preload.onprogress = event => {
-  console.log(event.progress + '%');
-}
-
-preload.onfetched = item => {
-  console.log(item);
+preload.onprogress = ({ progress, item }) => {
+  console.log(`${progress}%`, item.url)
 }
 
 preload.onerror = item => {
-  console.log(item);
+  console.error(item.url, item.failureReason, item.status)
 }
 
+const items = await preload.fetch([
+  '/images/cover.jpg',
+  '/video/trailer.mp4'
+])
 ```
 
-[See a live example](https://andreupifarre.github.io/preload-it/docs/index.html)
+The package also provides UMD bundles for direct browser use:
 
-[Codepen Preload-it example](https://codepen.io/andreupifarre/pen/RedPEQ/)
+```html
+<script src="https://unpkg.com/preload-it@2/dist/preload-it.min.js"></script>
+```
 
-## Canceling preload of assets
+## API
 
-Preloading of assets can be canceled at any time during fetching, when calling `preload.cancel()` all assets already preloaded will be available to use, however the download of pending assets will be abandoned, and `status` will be set to `0` for those remaining items.
+### `Preload(options)`
+
+Creates a preloader instance. `stepped` defaults to `true`, giving every asset equal weight in aggregate progress. Set it to `false` to weight progress by bytes when response sizes are available. `timeout` is an optional XHR timeout in milliseconds and defaults to `0` (disabled).
+
+### `fetch(urls)`
+
+Starts one batch and resolves with all item results after every request settles. HTTP and network failures do not reject the batch; they call `onerror` and appear in the resolved array with `error: true` and a `failureReason`.
+
+Each instance supports one active batch at a time. Starting an overlapping batch rejects with a usage error. A later, sequential call is supported and replaces `state` with the new batch.
+
+### Callbacks
+
+- `onprogress({ progress, item })` runs when aggregate progress changes.
+- `onfetched(item)` runs when an individual non-cancelled request settles.
+- `onerror(item)` runs for HTTP, network, and timeout failures.
+- `oncomplete(items)` runs after a non-cancelled batch settles.
+- `oncancel(items)` runs after a cancelled batch settles.
+
+The lowercase callback names are retained for compatibility.
+
+### `cancel()`
+
+Aborts the active batch. Aborted items have `status: 0`, `canceled: true`, and `failureReason: 'abort'`. The batch Promise resolves with its current items; `oncancel` runs instead of `oncomplete`.
+
+### `dispose()`
+
+Cancels active work and revokes all object URLs created by the instance. Call it when the loaded assets are no longer needed. Repeated calls are safe.
 
 ```js
-preload.cancel()
-
-preload.oncancel = items => {
-  console.log(items);
-}
+preload.dispose()
 ```
+
+## Result items
+
+Every item contains `url`, `completion`, `downloaded`, `total`, `error`, and `canceled`. Settled items may also contain `status`, `fileName`, `type`, `size`, `blobUrl`, and `failureReason` (`http`, `network`, `timeout`, or `abort`). TypeScript declarations are included.
+
+## Browser support
+
+The automated suite runs in current Chromium, Firefox, and WebKit releases.
 
 ## License
 
-Released for free under the MIT license, which means you can use it for almost any purpose (including commercial projects). We appreciate credit where possible, but it is not a requirement.
-
-[MIT](LICENSE).
+[MIT](LICENSE)

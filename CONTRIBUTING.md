@@ -1,11 +1,25 @@
 # Contributing
 
-Any form of contribution is welcomed.
+Contributions and bug reports are welcome.
 
-## Acknowledgements
+## Development
 
-- <It could be you!>
+Use Node.js 22 or 24 and install dependencies from the lockfile:
 
-## Open source contributor incentives
+```sh
+npm ci
+```
 
-I very much welcome developers to contribute to this library, and I will also give them incentives to acknowledge and thank them.
+Install the Playwright browsers once, then run the complete suite:
+
+```sh
+npx playwright install chromium firefox webkit
+npm test
+```
+
+Before opening a pull request, also verify the dependency audit and published contents:
+
+```sh
+npm audit --audit-level=high
+npm run pack:check
+```

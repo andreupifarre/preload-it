@@ -1,7 +1,7 @@
 {
   "name": "preload-it",
-  "version": "1.4.0",
-  "description": "A tiny 1kb JavaScript library for preloading assets on the browser via XHR2. It provides the ability to load assets of different file types and composite progress events.",
+  "version": "2.0.0",
+  "description": "A small JavaScript library for preloading browser assets with composite progress events.",
   "author": "Andreu Pifarre",
   "license": "MIT",
   "repository": "https://github.com/andreupifarre/preload-it",
@@ -15,30 +15,47 @@
     "es6",
     "videos",
     "images",
-    "assets",
     "load"
   ],
   "unpkg": "dist/preload-it.min.js",
   "main": "dist/preload-it.js",
   "module": "dist/preload-it.esm.js",
-  "module_minified": "dist/preload-it.esm.min.js",
   "browser": "dist/preload-it.js",
-  "minified": "dist/preload-it.min.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/preload-it.esm.mjs",
+      "require": "./dist/preload-it.js",
+      "default": "./dist/preload-it.js"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
   "dependencies": {},
   "devDependencies": {
-    "express": "^4.17.1",
-    "rollup": "^1.27.5",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-uglify-es": "0.0.1"
+    "@playwright/test": "^1.62.1",
+    "@rollup/plugin-terser": "^1.0.0",
+    "rollup": "^4.63.1",
+    "typescript": "^7.0.2"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "test": "node test/server.js",
-    "pretest": "npm run build"
+    "build": "rollup -c rollup.config.mjs",
+    "dev": "rollup -c rollup.config.mjs -w",
+    "test": "npm run test:types && playwright test",
+    "test:browser": "playwright test",
+    "test:server": "node test/server.mjs",
+    "test:types": "tsc --noEmit -p test/tsconfig.json",
+    "pretest": "npm run build",
+    "pack:check": "npm pack --dry-run"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts",
+    "README.md",
+    "CHANGELOG.md",
+    "MIGRATION.md",
+    "LICENSE"
   ]
 }

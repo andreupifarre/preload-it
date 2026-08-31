@@ -1,5 +1,5 @@
 export default function getItemByUrl(rawUrl) {
-    for (var item of this.state) {
-        if (item.url == rawUrl) return item
-    }
+	for (const item of this.state) {
+		if (item.url === rawUrl) return item
+	}
 }
