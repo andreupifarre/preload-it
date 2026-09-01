@@ -13,7 +13,8 @@ import Preload from 'preload-it'
 
 const preload = Preload({
   stepped: true,
-  timeout: 30_000
+  timeout: 30_000,
+  concurrency: 4
 })
 
 preload.onprogress = ({ progress, item }) => {
@@ -41,6 +42,8 @@ The package also provides UMD bundles for direct browser use:
 ### `Preload(options)`
 
 Creates a preloader instance. `stepped` defaults to `true`, giving every asset equal weight in aggregate progress. Set it to `false` to weight progress by bytes when response sizes are available. `timeout` is an optional XHR timeout in milliseconds and defaults to `0` (disabled).
+
+`concurrency` is an optional positive integer that limits simultaneous requests. It defaults to unlimited concurrency, preserving the behavior of previous releases. Queued items are included in `state` immediately and are marked as cancelled if `cancel()` runs before they start.
 
 ### `fetch(urls)`
 

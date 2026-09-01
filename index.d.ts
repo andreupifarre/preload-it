@@ -1,6 +1,7 @@
 export interface PreloadOptions {
   stepped?: boolean
   timeout?: number
+  concurrency?: number
 }
 
 export type FailureReason = 'http' | 'network' | 'timeout' | 'abort'
@@ -31,6 +32,7 @@ export interface Preloader {
   loaded: number | false
   stepped: boolean
   timeout: number
+  concurrency: number
   onprogress: (event: ProgressEvent) => void
   oncomplete: (items: PreloadItem[]) => void
   onfetched: (item: PreloadItem) => void

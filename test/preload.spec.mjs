@@ -80,6 +80,39 @@ test('supports duplicate URLs and replaces state for sequential batches', async 
 	expect(result).toEqual({ distinctItems: true, firstLength: 2, secondLength: 1, stateLength: 1 })
 })
 
+test('limits active requests when concurrency is configured', async ({ page }) => {
+	const result = await page.evaluate(async () => {
+		const id = crypto.randomUUID()
+		const preload = window.Preload({ concurrency: 2 })
+		const items = await preload.fetch(Array.from({ length: 5 }, (_, index) => `/fixture/concurrency/${id}?item=${index}`))
+		const stats = await fetch(`/fixture/concurrency-result/${id}`).then(response => response.json())
+		return { maximum: stats.maximum, concurrency: preload.concurrency, statuses: items.map(item => item.status) }
+	})
+
+	expect(result.maximum).toBe(2)
+	expect(result.concurrency).toBe(2)
+	expect(result.statuses).toEqual([200, 200, 200, 200, 200])
+})
+
+test('keeps unlimited concurrency as the default and validates limits', async ({ page }) => {
+	const result = await page.evaluate(() => {
+		const preload = window.Preload()
+		const invalid = []
+		for (const concurrency of [0, -1, 1.5]) {
+			try {
+				window.Preload({ concurrency })
+			} catch (error) {
+				invalid.push(error.message)
+			}
+		}
+		return { unlimited: preload.concurrency === Infinity, invalid }
+	})
+
+	expect(result.unlimited).toBe(true)
+	expect(result.invalid).toHaveLength(3)
+	expect(result.invalid.every(message => message.includes('positive integer'))).toBe(true)
+})
+
 test('rejects overlapping batches without disrupting the active batch', async ({ page }) => {
 	const result = await page.evaluate(async () => {
 		const preload = window.Preload()
@@ -117,6 +150,22 @@ test('cancels before progress and settles once without completing', async ({ pag
 
 	expect(result.items.every(item => item.canceled && item.status === 0)).toBe(true)
 	expect(result).toMatchObject({ canceled: 1, completed: 0, errors: 0 })
+})
+
+test('cancels queued items that have not started', async ({ page }) => {
+	const result = await page.evaluate(async () => {
+		const preload = window.Preload({ concurrency: 1 })
+		const promise = preload.fetch(['/fixture/slow?1', '/fixture/slow?2', '/fixture/slow?3'])
+		preload.cancel()
+		const items = await promise
+		return items.map(item => ({ canceled: item.canceled, started: Boolean(item.xhr), status: item.status }))
+	})
+
+	expect(result).toEqual([
+		{ canceled: true, started: true, status: 0 },
+		{ canceled: true, started: false, status: 0 },
+		{ canceled: true, started: false, status: 0 }
+	])
 })
 
 test('cancels during progress and is a no-op after completion', async ({ page }) => {

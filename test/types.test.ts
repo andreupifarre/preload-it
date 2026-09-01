@@ -1,6 +1,6 @@
 import Preload, { type PreloadItem, type ProgressEvent } from 'preload-it'
 
-const preload = Preload({ stepped: false, timeout: 1_000 })
+const preload = Preload({ stepped: false, timeout: 1_000, concurrency: 4 })
 
 preload.onprogress = (event: ProgressEvent) => console.log(event.progress)
 preload.onerror = (item: PreloadItem) => console.log(item.failureReason)

@@ -30,6 +30,9 @@ export default function fetch(list) {
 		const batch = {
 			items: this.state,
 			remaining: this.state.length,
+			active: 0,
+			nextIndex: 0,
+			startedItems: new WeakSet(),
 			cancelled: false,
 			resolve
 		}
@@ -46,6 +49,7 @@ export default function fetch(list) {
 
 		const settleItem = (settledItem, outcome) => {
 			this._settledItems.add(settledItem)
+			if (batch.startedItems.has(settledItem)) batch.active--
 			batch.remaining--
 			this.loaded = batch.remaining
 
@@ -55,6 +59,8 @@ export default function fetch(list) {
 			if (finished) {
 				this._activeBatch = null
 				batch.resolve(batch.items)
+			} else if (!batch.cancelled) {
+				queueMicrotask(startNext)
 			}
 
 			if (outcome === 'error') invoke(this.onerror, settledItem)
@@ -64,19 +70,28 @@ export default function fetch(list) {
 				invoke(batch.cancelled ? this.oncancel : this.oncomplete, batch.items)
 			}
 		}
+		batch.settleItem = settleItem
 
-		for (const item of batch.items) {
-			try {
-				this.preloadOne(item.url, settleItem, item)
-			} catch (error) {
-				item.status = 0
-				item.blobUrl = null
-				item.size = null
-				item.error = true
-				item.failureReason = 'network'
-				item.completion = 100
-				settleItem(item, 'error')
+		const startNext = () => {
+			if (batch.cancelled) return
+			while (batch.active < this.concurrency && batch.nextIndex < batch.items.length) {
+				const item = batch.items[batch.nextIndex++]
+				batch.active++
+				batch.startedItems.add(item)
+				try {
+					this.preloadOne(item.url, settleItem, item)
+				} catch (error) {
+					item.status = 0
+					item.blobUrl = null
+					item.size = null
+					item.error = true
+					item.failureReason = 'network'
+					item.completion = 100
+					settleItem(item, 'error')
+				}
 			}
 		}
+
+		startNext()
 	})
 }

@@ -11,12 +11,17 @@ export default function Preload(options) {
 	if (typeof timeout !== 'number' || !Number.isFinite(timeout) || timeout < 0) {
 		throw new TypeError('Preload timeout must be a non-negative number')
 	}
+	const concurrency = settings.concurrency == null ? Infinity : settings.concurrency
+	if (concurrency !== Infinity && (!Number.isInteger(concurrency) || concurrency < 1)) {
+		throw new TypeError('Preload concurrency must be a positive integer')
+	}
 
 	return {
 		state: [],
 		loaded: false,
 		stepped: settings.stepped !== false,
 		timeout,
+		concurrency,
 		onprogress: () => {},
 		oncomplete: () => {},
 		onfetched: () => {},
